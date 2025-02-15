@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Radio UDG</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('images/fondoradio.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .card-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: black;
+            border: 3px solid yellow;
+            box-shadow: 0 0 15px red;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .banner img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .btn-primary {
+            background-color: red;
+            border-color: red;
+        }
+        .btn-primary:hover {
+            background-color: darkred;
+            border-color: darkred;
+        }
+        h2, .form-label, .toggle-text {
+            color: yellow;
+        }
+        .form-wrapper {
+            display: flex;
+            width: 200%;
+            transition: transform 0.5s ease-in-out;
+        }
+        .form-box {
+            width: 50%;
+            padding: 15px;
+        }
+        .toggle-text {
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+        .toggle-text:hover {
+            text-decoration: underline;
+        }
+        .alert {
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card-container">
+        <div class="banner">
+            <img src="images/logoradio2.jpg" alt="Logo Radio UDG">
+        </div>
+        <h2 class="text-center mb-3">Bienvenido a la Estación de Radio UDG</h2>
+
+        <!-- Alertas de error o éxito -->
+        <div id="alert-box"></div>
+
+        <div class="form-wrapper" id="form-wrapper">
+            <!-- Formulario de inicio de sesión -->
+            <form id="login-form" class="form-box" action="login.php" method="POST">
+                <div class="mb-3">
+                    <label for="usuario" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Ingrese su usuario" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Ingrese su contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Entrar</button>
+                <p class="toggle-text" onclick="toggleForms()">¿No tienes cuenta? <strong>Regístrate aquí</strong></p>
+            </form>
+
+            <!-- Formulario de registro -->
+            <form id="register-form" class="form-box" action="registro.php" method="POST">
+                <h2 class="text-center mb-3">Registro</h2>
+                <div class="mb-3">
+                    <label for="new-user" class="form-label">Nuevo Usuario</label>
+                    <input type="text" class="form-control" id="new-user" name="new-user" placeholder="Ingrese su usuario" required>
+                </div>
+                <div class="mb-3">
+                    <label for="new-password" class="form-label">Nueva Contraseña</label>
+                    <input type="password" class="form-control" id="new-password" name="new-password" placeholder="Ingrese su contraseña" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+                <p class="toggle-text" onclick="toggleForms()">¿Ya tienes cuenta? <strong>Inicia sesión aquí</strong></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let isLoginVisible = true;
+        function toggleForms() {
+            const formWrapper = document.getElementById("form-wrapper");
+            formWrapper.style.transform = isLoginVisible ? "translateX(-50%)" : "translateX(0)";
+            isLoginVisible = !isLoginVisible;
+        }
+
+        // Mostrar alertas si hay errores en la URL
+        window.onload = function () {
+            const params = new URLSearchParams(window.location.search);
+            const alertBox = document.getElementById("alert-box");
+            if (params.has("login") && params.get("login") === "error") {
+                alertBox.innerHTML = '<div class="alert alert-danger">Usuario o contraseña incorrectos.</div>';
+            } else if (params.has("register") && params.get("register") === "success") {
+                alertBox.innerHTML = '<div class="alert alert-success">Registro exitoso. ¡Ahora puedes iniciar sesión!</div>';
+            }
+        };
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
